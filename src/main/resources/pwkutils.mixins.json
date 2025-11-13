@@ -1,0 +1,15 @@
+{
+	"required": true,
+	"package": "pwk.utils.mixin",
+	"compatibilityLevel": "JAVA_17",
+	"mixins": [
+		"PlayerJoinMixin",
+		"PlayerLeaveMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}
