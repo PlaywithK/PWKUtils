@@ -4,7 +4,10 @@
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
 		"PlayerJoinMixin",
-		"PlayerLeaveMixin"
+		"PlayerLeaveMixin",
+		"ChatFormatMixin",
+		"PlayerOPMixin",
+		"PlayerDeOPMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

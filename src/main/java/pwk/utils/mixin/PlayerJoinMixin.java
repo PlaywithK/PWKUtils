@@ -8,6 +8,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
+import pwk.utils.ConfigManager;
+
 @Mixin(PlayerManager.class)
 public class PlayerJoinMixin {
 
@@ -19,6 +21,11 @@ public class PlayerJoinMixin {
                 )
         )
         private void redirectJoinMessage(PlayerManager instance, Text message, boolean overlay, ClientConnection connection, ServerPlayerEntity player) {
-            instance.broadcast(Text.literal("§a+ Willkommen, " + player.getName().getString() + "!"), false);
+                if (ConfigManager.shouldChangeJoinLeave()) {
+                        String msg = ConfigManager.getJoinMessage(player.getName().getString());
+                        instance.broadcast(Text.literal(msg), false);
+                } else {
+                        instance.broadcast(message, overlay);
+                }
         }
 }
