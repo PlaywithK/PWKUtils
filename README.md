@@ -1,6 +1,8 @@
 # PWKUtils Mod
 
-**PWKUtils** is a serverside Fabric mod that adds various quality-of-life features for admins and players, allowing server owners to customize chat, tablist, prefixes, and more on Fabric servers.  
+**PWKUtils** is a serverside Fabric mod that adds various quality-of-life features for admins and players, allowing server owners to customize chat, tablist, prefixes, and more on Fabric servers.
+
+Get it on modrinth: https://modrinth.com/mod/pwkutils
 
 ## Features
 
