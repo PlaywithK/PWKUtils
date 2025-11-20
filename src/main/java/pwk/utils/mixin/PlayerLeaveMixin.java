@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import pwk.utils.ConfigManager;
+import pwk.utils.PWKUtils;
 
 @Mixin(ServerPlayNetworkHandler.class)
 public class PlayerLeaveMixin {
@@ -25,7 +26,7 @@ public class PlayerLeaveMixin {
     )
     private void redirectLeaveMessage(PlayerManager manager, Text message, boolean overlay) {
         if (ConfigManager.shouldChangeJoinLeave()) {
-            String msg = ConfigManager.getLeaveMessage(player.getName().getString());
+            String msg = ConfigManager.getLeaveMessage(PWKUtils.PREFIX_MANAGER.getFormattedName(player));
             manager.broadcast(Text.literal(msg), false);
         } else {
             manager.broadcast(message, false);

@@ -1,0 +1,13 @@
+{
+  "command.autowhitelist.add": "§a%s §7has been added to the auto whitelist.",
+  "command.autowhitelist.list.empty": "§cNo players in the auto whitelist.",
+  "command.autowhitelist.list.header": "Players in the auto whitelist:",
+  "command.autowhitelist.clear": "Auto-whitelist cleared (§c§l%s §7entries removed).",
+  "command.autowhitelist.run.notfound": "§cCould not find player %s!",
+  "command.autowhitelist.run.success": "§a§l%s §7players have been automatically whitelisted.",
+
+  "gamemode.self": "Your game mode has been set to §6§l%s§7!",
+  "gamemode.notfound": "§cPlayer not found!",
+  "gamemode.setother": "You have set the game mode of §a%s §7to §6§l%s§7!",
+  "gamemode.target": "Your game mode has been set to §6§l%s§7!"
+}
