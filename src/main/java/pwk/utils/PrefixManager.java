@@ -19,7 +19,12 @@ public class PrefixManager {
 
     public void applyPrefix(ServerPlayer player) {
         String prefix;
-        if (player.hasPermissions(4)) {
+        //? if >=1.21.11 {
+    if (player.createCommandSourceStack().permissions().hasPermission(
+            net.minecraft.server.permissions.Permissions.COMMANDS_OWNER)) {
+    //?} else {
+        /*if (player.hasPermissions(4)) {
+            *///?}
             prefix = ConfigManager.getOpPrefix();
         } else {
             prefix = ConfigManager.getNonOpPrefix();
@@ -34,7 +39,11 @@ public class PrefixManager {
     public void removePrefix(ServerPlayer player) {
         prefixes.remove(player.getUUID());
 
-        MinecraftServer server = player.getServer();
+//? if >=1.21.11 {
+        MinecraftServer server = player.level().getServer();
+         //?} else {
+        /*MinecraftServer server = player.getServer();
+*///?}
         if (server == null) return;
 
         Scoreboard scoreboard = server.getScoreboard();
@@ -52,7 +61,11 @@ public class PrefixManager {
     }
 
     private void updateTeam(ServerPlayer player) {
-        MinecraftServer server = player.getServer();
+//? if >=1.21.11 {
+        MinecraftServer server = player.level().getServer();
+         //?} else {
+        /*MinecraftServer server = player.getServer();
+*///?}
         if (server == null) return;
 
         Scoreboard scoreboard = server.getScoreboard();

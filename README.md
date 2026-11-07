@@ -4,6 +4,25 @@
 
 Get it on modrinth: https://modrinth.com/mod/pwkutils
 
+## Versions
+
+| Minecraft | Fabric | NeoForge | Forge | Quilt |
+|-----------|:-----:|:-----:|:-----:|:-----:|
+| 26.3 | 📅| 📅 | 📅 | ❌ |
+| 26.2 | 📅 | 📅 | 📅 | ❌ |
+| 26.1 | 📅 | 📅 | 📅 | ❌ |
+| 1.21.11 | 📅 | 📅 | 📅 | 📅 |
+| 1.21.1 | 🚧 | ✅ | 📅 | 📅 |
+| 1.21 | 🚧 | ✅ | 📅 | 📅 |
+| 1.20.6 | 📅 | 📅 | 📅 | 📅 |
+| 1.20.1 | ✅ | 🚧 | 📅 | 📅 |
+| 1.20 | ✅ | 🚧 | 📅| 📅 |
+| 1.19.x | 📅 | ❌ | 📅 | 📅 |
+| 1.18.x | 📅 | ❌ | 📅 | 📅 |
+| 1.12.2 | 📅 | ❌ | 📅 | 📅 |
+
+✅ Supported · 🚧 Work in Progress · 📅 Planned · ❌ Not supported/planned
+
 ## Features
 
 ### 1. Player Prefixes

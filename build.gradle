@@ -1,7 +1,7 @@
 plugins {
 	id 'java-library'
 	id 'maven-publish'
-	id 'net.neoforged.moddev' version '2.0.78'
+	id 'net.neoforged.moddev' version '2.0.148'
 }
 
 version = mod_version
@@ -21,7 +21,7 @@ neoForge {
 	runs {
 		server {
 			server()
-			programArguments.add('--nogui')
+			// programArguments.add('--nogui')
 		}
 	}
 
@@ -48,7 +48,7 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
 	]
 	inputs.properties replaceProperties
 	expand replaceProperties
-	from "src/main/templates"
+	from rootProject.file("src/main/templates")
 	into "build/generated/sources/modMetadata"
 }
 sourceSets.main.resources.srcDir generateModMetadata

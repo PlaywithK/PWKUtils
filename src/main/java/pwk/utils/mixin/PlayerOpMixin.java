@@ -9,24 +9,37 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import pwk.utils.PWKUtils;
+import java.util.UUID;
 
 @Mixin(PlayerList.class)
 public class PlayerOpMixin {
 
-    @Inject(method = "op(Lcom/mojang/authlib/GameProfile;)V", at = @At("TAIL"))
+    //? if >=1.21.11 {
+    @Inject(method = "op(Lnet/minecraft/server/players/NameAndId;)V", at = @At("TAIL"))
+    private void pwkutils$onOp(net.minecraft.server.players.NameAndId profile, CallbackInfo ci) {
+        pwkutils$refreshPrefix(profile.id());
+    }
+
+    @Inject(method = "deop(Lnet/minecraft/server/players/NameAndId;)V", at = @At("TAIL"))
+    private void pwkutils$onDeop(net.minecraft.server.players.NameAndId profile, CallbackInfo ci) {
+        pwkutils$refreshPrefix(profile.id());
+    }
+    //?} else {
+    /*@Inject(method = "op(Lcom/mojang/authlib/GameProfile;)V", at = @At("TAIL"))
     private void pwkutils$onOp(GameProfile profile, CallbackInfo ci) {
-        pwkutils$refreshPrefix(profile);
+        pwkutils$refreshPrefix(profile.getId());
     }
 
     @Inject(method = "deop(Lcom/mojang/authlib/GameProfile;)V", at = @At("TAIL"))
     private void pwkutils$onDeop(GameProfile profile, CallbackInfo ci) {
-        pwkutils$refreshPrefix(profile);
+        pwkutils$refreshPrefix(profile.getId());
     }
+    *///?}
 
     @Unique
-    private void pwkutils$refreshPrefix(GameProfile profile) {
+    private void pwkutils$refreshPrefix(UUID id) {
         PlayerList self = (PlayerList) (Object) this;
-        ServerPlayer player = self.getPlayer(profile.getId());
+        ServerPlayer player = self.getPlayer(id);
         if (player != null) {
             PWKUtils.PREFIX_MANAGER.applyPrefix(player);
         }

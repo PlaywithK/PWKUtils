@@ -16,7 +16,11 @@ public class WelcomeMessageManager {
     @SubscribeEvent
     public void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
-            MinecraftServer server = player.getServer();
+            //? if >=1.21.11 {
+            MinecraftServer server = player.level().getServer();
+             //?} else {
+            /*MinecraftServer server = player.getServer();
+            *///?}
             if (server == null) return;
             server.execute(() -> sendWelcomeMessage(player));
         }

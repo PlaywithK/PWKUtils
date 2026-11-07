@@ -16,14 +16,25 @@ public class AutoWhitelistCommand {
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(literal("autowhitelist")
-                .requires(src -> src.hasPermission(2))
+                        .requires(src ->
+                                        //? if >=1.21.11 {
+        src.permissions().hasPermission(
+                net.minecraft.server.permissions.Permissions.COMMANDS_GAMEMASTER)
+        //?} else {
+                                        /*src.hasPermission(2)
+                                *///?}
+                        )
 
                 .then(literal("add")
                         .then(argument("name", StringArgumentType.word())
                                 .suggests((context, builder) -> {
                                     for (ServerPlayer p : context.getSource().getServer()
                                             .getPlayerList().getPlayers()) {
-                                        builder.suggest(p.getGameProfile().getName());
+                                        //? if >=1.21.11 {
+                                        builder.suggest(p.getGameProfile().name());
+                                         //?} else {
+                                        /*builder.suggest(p.getGameProfile().getName());
+*///?}
                                     }
                                     return CompletableFuture.completedFuture(builder.build());
                                 })
@@ -82,7 +93,11 @@ public class AutoWhitelistCommand {
                             int count = 0;
 
                             for (String playerName : cfg.players) {
-                                var profile = server.getProfileCache().get(playerName);
+//? if >=1.21.11 {
+                                var profile = server.services().nameToIdCache().get(playerName);
+//?} else {
+                                /*var profile = server.getProfileCache().get(playerName);
+                                 *///?}
 
                                 if (profile.isEmpty()) {
                                     send(ctx.getSource(), LocalizationManager.get("command.autowhitelist.run.notfound", playerName));
