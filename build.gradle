@@ -21,7 +21,7 @@ neoForge {
 	runs {
 		server {
 			server()
-			// programArguments.add('--nogui')
+			programArguments.add('--nogui')
 		}
 	}
 

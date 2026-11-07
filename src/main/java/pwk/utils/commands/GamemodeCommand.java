@@ -19,11 +19,11 @@ public class GamemodeCommand {
         dispatcher.register(literal("gm")
                 .requires(src ->
                                 //? if >=1.21.11 {
-                src.permissions().hasPermission(
+                /*src.permissions().hasPermission(
                         net.minecraft.server.permissions.Permissions.COMMANDS_GAMEMASTER)
-                //?} else {
-                                /*src.hasPermission(2)
-                        *///?}
+                *///?} else {
+                                src.hasPermission(2)
+                        //?}
                 )
                 .then(argument("mode", IntegerArgumentType.integer(0, 3))
                         .executes(context -> {
@@ -43,10 +43,10 @@ public class GamemodeCommand {
                                     for (ServerPlayer p : context.getSource().getServer()
                                             .getPlayerList().getPlayers()) {
                                         //? if >=1.21.11 {
-                                        builder.suggest(p.getGameProfile().name());
-                                         //?} else {
-                                        /*builder.suggest(p.getGameProfile().getName());
-                                        *///?}
+                                        /*builder.suggest(p.getGameProfile().name());
+                                         *///?} else {
+                                        builder.suggest(p.getGameProfile().getName());
+                                        //?}
                                     }
                                     return CompletableFuture.completedFuture(builder.build());
                                 })
