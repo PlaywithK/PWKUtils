@@ -1,30 +1,35 @@
 package pwk.utils;
 
-import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Text;
+import net.minecraft.server.level.ServerPlayer;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 
 public class WelcomeMessageManager {
 
     public WelcomeMessageManager() {
-        ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
-            ServerPlayerEntity player = handler.getPlayer();
-            server.execute(() -> sendWelcomeMessage(player));
-        });
+        NeoForge.EVENT_BUS.register(this);
     }
 
-    private void sendWelcomeMessage(ServerPlayerEntity player) {
-        if (!ConfigManager.shouldShowWelcomeMessage()) return;
+    @SubscribeEvent
+    public void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player) {
+            MinecraftServer server = player.getServer();
+            if (server == null) return;
+            server.execute(() -> sendWelcomeMessage(player));
+        }
+    }
 
-        MinecraftServer server = player.getServer();
-        int onlinePlayers = server.getCurrentPlayerCount();
+    private void sendWelcomeMessage(ServerPlayer player) {
+        if (!ConfigManager.shouldShowWelcomeMessage()) return;
 
         String rawMessage = ConfigManager.getWelcomeMessage();
 
         String[] lines = rawMessage.split("\n");
         for (String line : lines) {
-            player.sendMessage(Text.literal(line), false);
+            player.sendSystemMessage(Component.literal(line));
         }
     }
 }

@@ -1,77 +1,80 @@
 package pwk.utils.commands;
 
+import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
-import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Text;
-import net.minecraft.world.GameMode;
 import com.mojang.brigadier.arguments.StringArgumentType;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.GameType;
 import pwk.utils.LocalizationManager;
-
 import java.util.concurrent.CompletableFuture;
-
-import static net.minecraft.server.command.CommandManager.argument;
-import static net.minecraft.server.command.CommandManager.literal;
+import static net.minecraft.commands.Commands.argument;
+import static net.minecraft.commands.Commands.literal;
 
 public class GamemodeCommand {
-    public static void registerCommands() {
-        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
-            dispatcher.register(literal("gm")
-                    .requires(src -> src.hasPermissionLevel(2))
-                    .then(argument("mode", IntegerArgumentType.integer(0, 3))
-                            .executes(context -> {
-                                int modeInt = IntegerArgumentType.getInteger(context, "mode");
-                                ServerPlayerEntity player = context.getSource().getPlayer();
 
-                                GameMode mode = getGameMode(modeInt);
-                                player.changeGameMode(mode);
+    public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
+        dispatcher.register(literal("gm")
+                .requires(src -> src.hasPermission(2))
+                .then(argument("mode", IntegerArgumentType.integer(0, 3))
+                        .executes(context -> {
+                            int modeInt = IntegerArgumentType.getInteger(context, "mode");
+                            ServerPlayer player = context.getSource().getPlayerOrException();
 
-                                player.sendMessage(Text.literal(LocalizationManager.get("gamemode.self", mode)), false);
-                                return 1;
-                            })
+                            GameType mode = getGameMode(modeInt);
+                            player.setGameMode(mode);
 
-                            .then(argument("target", StringArgumentType.word())
-                                    .suggests((context, builder) -> {
-                                        for (ServerPlayerEntity p : context.getSource().getServer()
-                                                .getPlayerManager().getPlayerList()) {
-                                            builder.suggest(p.getGameProfile().getName());
-                                        }
-                                        return CompletableFuture.completedFuture(builder.build());
-                                    })
+                            player.sendSystemMessage(Component.literal(
+                                    LocalizationManager.get("gamemode.self", mode)));
+                            return 1;
+                        })
 
-                                    .executes(context -> {
-                                        int modeInt = IntegerArgumentType.getInteger(context, "mode");
-                                        String targetName = StringArgumentType.getString(context, "target");
+                        .then(argument("target", StringArgumentType.word())
+                                .suggests((context, builder) -> {
+                                    for (ServerPlayer p : context.getSource().getServer()
+                                            .getPlayerList().getPlayers()) {
+                                        builder.suggest(p.getGameProfile().getName());
+                                    }
+                                    return CompletableFuture.completedFuture(builder.build());
+                                })
 
-                                        MinecraftServer server = context.getSource().getServer();
-                                        ServerPlayerEntity target = server.getPlayerManager().getPlayer(targetName);
+                                .executes(context -> {
+                                    int modeInt = IntegerArgumentType.getInteger(context, "mode");
+                                    String targetName = StringArgumentType.getString(context, "target");
 
-                                        if (target == null) {
-                                            context.getSource().sendError(Text.literal(LocalizationManager.get("gamemode.notfound", targetName)));;
-                                            return 0;
-                                        }
+                                    MinecraftServer server = context.getSource().getServer();
+                                    ServerPlayer target = server.getPlayerList().getPlayerByName(targetName);
 
-                                        GameMode mode = getGameMode(modeInt);
-                                        target.changeGameMode(mode);
+                                    if (target == null) {
+                                        context.getSource().sendFailure(Component.literal(
+                                                LocalizationManager.get("gamemode.notfound", targetName)));
+                                        return 0;
+                                    }
 
-                                        context.getSource().sendMessage(Text.literal(LocalizationManager.get("gamemode.setother", target.getName().getString(), mode)));
-                                        target.sendMessage(Text.literal(LocalizationManager.get("gamemode.target", mode)));
-                                        return 1;
-                                    })
-                            )
-                    )
-            );
-        });
+                                    GameType mode = getGameMode(modeInt);
+                                    target.setGameMode(mode);
+
+                                    context.getSource().sendSuccess(() -> Component.literal(
+                                            LocalizationManager.get("gamemode.setother",
+                                                    target.getName().getString(), mode)), false);
+                                    target.sendSystemMessage(Component.literal(
+                                            LocalizationManager.get("gamemode.target", mode)));
+                                    return 1;
+                                })
+                        )
+                )
+        );
     }
 
-    private static GameMode getGameMode(int modeInt) {
+    private static GameType getGameMode(int modeInt) {
         return switch (modeInt) {
-            case 0 -> GameMode.SURVIVAL;
-            case 1 -> GameMode.CREATIVE;
-            case 2 -> GameMode.ADVENTURE;
-            case 3 -> GameMode.SPECTATOR;
-            default -> GameMode.SURVIVAL;
+            case 0 -> GameType.SURVIVAL;
+            case 1 -> GameType.CREATIVE;
+            case 2 -> GameType.ADVENTURE;
+            case 3 -> GameType.SPECTATOR;
+            default -> GameType.SURVIVAL;
         };
     }
 }

@@ -1,31 +1,29 @@
 package pwk.utils.commands;
 
-import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Text;
+import com.mojang.brigadier.CommandDispatcher;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.network.chat.Component;
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
-import static net.minecraft.server.command.CommandManager.literal;
+import static net.minecraft.commands.Commands.literal;
 
 public class TPSCommand {
     private static long lastTickTime = System.currentTimeMillis();
-    private static double tps = 20.0;
+    private static volatile double tps = 20.0;
 
-    public static void registerCommands() {
-        ServerTickEvents.START_SERVER_TICK.register(server -> {
-            long now = System.currentTimeMillis();
-            long delta = now - lastTickTime;
-            tps = 1000.0 / delta;
-            if (tps > 20.0) tps = 20.0;
-            lastTickTime = now;
-        });
+    public static void onServerTick(ServerTickEvent.Pre event) {
+        long now = System.currentTimeMillis();
+        long delta = now - lastTickTime;
+        lastTickTime = now;
+        if (delta <= 0) return;
+        tps = Math.min(20.0, 1000.0 / delta);
+    }
 
-        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
-            dispatcher.register(literal("tps").executes(context -> {
-                ServerPlayerEntity player = context.getSource().getPlayer();
-                player.sendMessage(Text.literal("§8[§3PWKUtils§8] §cTPS: §6" + String.format("%.2f", tps)), false);
-                return 1;
-            }));
-        });
+    public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
+        dispatcher.register(literal("tps").executes(context -> {
+            context.getSource().sendSuccess(() -> Component.literal(
+                    "§8[§3PWKUtils§8] §cTPS: §6" + String.format("%.2f", tps)), false);
+            return 1;
+        }));
     }
 }

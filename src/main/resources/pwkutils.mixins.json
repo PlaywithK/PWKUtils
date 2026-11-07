@@ -5,9 +5,7 @@
 	"mixins": [
 		"PlayerJoinMixin",
 		"PlayerLeaveMixin",
-		"ChatFormatMixin",
-		"PlayerOPMixin",
-		"PlayerDeOPMixin"
+		"PlayerOpMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

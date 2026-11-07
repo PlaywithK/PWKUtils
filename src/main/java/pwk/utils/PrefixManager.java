@@ -1,10 +1,10 @@
 package pwk.utils;
 
-import net.minecraft.scoreboard.Scoreboard;
-import net.minecraft.scoreboard.Team;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.network.ServerPlayerEntity;
-
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.scores.PlayerTeam;
+import net.minecraft.world.scores.Scoreboard;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -12,14 +12,14 @@ import java.util.UUID;
 public class PrefixManager {
     private final Map<UUID, String> prefixes = new HashMap<>();
 
-    public void setPrefix(ServerPlayerEntity player, String prefix) {
-        prefixes.put(player.getUuid(), prefix);
+    public void setPrefix(ServerPlayer player, String prefix) {
+        prefixes.put(player.getUUID(), prefix);
         updateTeam(player);
     }
 
-    public void applyPrefix(ServerPlayerEntity player) {
+    public void applyPrefix(ServerPlayer player) {
         String prefix;
-        if (player.hasPermissionLevel(4)) {
+        if (player.hasPermissions(4)) {
             prefix = ConfigManager.getOpPrefix();
         } else {
             prefix = ConfigManager.getNonOpPrefix();
@@ -27,52 +27,51 @@ public class PrefixManager {
         setPrefix(player, prefix);
     }
 
-
-    public String getPrefix(ServerPlayerEntity player) {
-        return prefixes.getOrDefault(player.getUuid(), "");
+    public String getPrefix(ServerPlayer player) {
+        return prefixes.getOrDefault(player.getUUID(), "");
     }
 
-    public void removePrefix(ServerPlayerEntity player) {
-        prefixes.remove(player.getUuid());
+    public void removePrefix(ServerPlayer player) {
+        prefixes.remove(player.getUUID());
 
         MinecraftServer server = player.getServer();
         if (server == null) return;
 
         Scoreboard scoreboard = server.getScoreboard();
-        Team team = scoreboard.getPlayerTeam(player.getEntityName());
+        PlayerTeam team = scoreboard.getPlayersTeam(player.getScoreboardName());
         if (team != null) {
-            scoreboard.removePlayerFromTeam(player.getEntityName(), team);
-            if (team.getPlayerList().isEmpty()) {
-                scoreboard.removeTeam(team);
+            scoreboard.removePlayerFromTeam(player.getScoreboardName(), team);
+            if (team.getPlayers().isEmpty()) {
+                scoreboard.removePlayerTeam(team);
             }
         }
     }
 
-    public String getFormattedName(ServerPlayerEntity player) {
+    public String getFormattedName(ServerPlayer player) {
         return getPrefix(player) + player.getName().getString();
     }
 
-    private void updateTeam(ServerPlayerEntity player) {
+    private void updateTeam(ServerPlayer player) {
         MinecraftServer server = player.getServer();
         if (server == null) return;
 
         Scoreboard scoreboard = server.getScoreboard();
-        String teamName = "pwk_" + player.getEntityName();
+        String teamName = "pwk_" + player.getScoreboardName();
 
         if (teamName.length() > 16) {
             teamName = teamName.substring(0, 16);
         }
 
-        Team team = scoreboard.getTeam(teamName);
+        PlayerTeam team = scoreboard.getPlayerTeam(teamName);
         if (team == null) {
-            team = scoreboard.addTeam(teamName);
+            team = scoreboard.addPlayerTeam(teamName);
         }
 
-        team.setPrefix(net.minecraft.text.Text.literal(getPrefix(player)));
+        team.setPlayerPrefix(Component.literal(getPrefix(player)));
 
-        Team currentTeam = scoreboard.getPlayerTeam(player.getEntityName());
+        PlayerTeam currentTeam = scoreboard.getPlayersTeam(player.getScoreboardName());
         if (currentTeam == null || !currentTeam.equals(team)) {
-            scoreboard.addPlayerToTeam(player.getEntityName(), team);
+            scoreboard.addPlayerToTeam(player.getScoreboardName(), team);
         }
     }
 }
