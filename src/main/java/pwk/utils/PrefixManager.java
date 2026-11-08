@@ -39,11 +39,11 @@ public class PrefixManager {
     public void removePrefix(ServerPlayer player) {
         prefixes.remove(player.getUUID());
 
-//? if >=1.21.11 {
-        /*MinecraftServer server = player.level().getServer();
-         *///?} else {
-        MinecraftServer server = player.getServer();
-//?}
+//? if >=1.21.9 {
+        MinecraftServer server = player.level().getServer();
+         //?} else {
+        /*MinecraftServer server = player.getServer();
+*///?}
         if (server == null) return;
 
         Scoreboard scoreboard = server.getScoreboard();
@@ -61,11 +61,11 @@ public class PrefixManager {
     }
 
     private void updateTeam(ServerPlayer player) {
-//? if >=1.21.11 {
-        /*MinecraftServer server = player.level().getServer();
-         *///?} else {
-        MinecraftServer server = player.getServer();
-//?}
+//? if >=1.21.9 {
+        MinecraftServer server = player.level().getServer();
+         //?} else {
+        /*MinecraftServer server = player.getServer();
+*///?}
         if (server == null) return;
 
         Scoreboard scoreboard = server.getScoreboard();

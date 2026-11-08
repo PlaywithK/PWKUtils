@@ -56,11 +56,11 @@ public class PWKUtils {
 		if (!ConfigManager.isChatFormattingAllowed()) return;
 
 		ServerPlayer player = event.getPlayer();
-//? if >=1.21.11 {
-		/*MinecraftServer server = player.level().getServer();
-		 *///?} else {
-		MinecraftServer server = player.getServer();
-//?}
+//? if >=1.21.9 {
+		MinecraftServer server = player.level().getServer();
+		 //?} else {
+		/*MinecraftServer server = player.getServer();
+*///?}
 		if (server == null) return;
 
 		String formattedMsg = ConfigManager.getChatFormat(

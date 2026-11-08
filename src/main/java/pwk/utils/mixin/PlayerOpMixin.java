@@ -14,8 +14,8 @@ import java.util.UUID;
 @Mixin(PlayerList.class)
 public class PlayerOpMixin {
 
-    //? if >=1.21.11 {
-    /*@Inject(method = "op(Lnet/minecraft/server/players/NameAndId;)V", at = @At("TAIL"))
+    //? if >=1.21.9 {
+    @Inject(method = "op(Lnet/minecraft/server/players/NameAndId;)V", at = @At("TAIL"))
     private void pwkutils$onOp(net.minecraft.server.players.NameAndId profile, CallbackInfo ci) {
         pwkutils$refreshPrefix(profile.id());
     }
@@ -24,8 +24,8 @@ public class PlayerOpMixin {
     private void pwkutils$onDeop(net.minecraft.server.players.NameAndId profile, CallbackInfo ci) {
         pwkutils$refreshPrefix(profile.id());
     }
-    *///?} else {
-    @Inject(method = "op(Lcom/mojang/authlib/GameProfile;)V", at = @At("TAIL"))
+    //?} else {
+    /*@Inject(method = "op(Lcom/mojang/authlib/GameProfile;)V", at = @At("TAIL"))
     private void pwkutils$onOp(GameProfile profile, CallbackInfo ci) {
         pwkutils$refreshPrefix(profile.getId());
     }
@@ -34,7 +34,7 @@ public class PlayerOpMixin {
     private void pwkutils$onDeop(GameProfile profile, CallbackInfo ci) {
         pwkutils$refreshPrefix(profile.getId());
     }
-    //?}
+    *///?}
 
     @Unique
     private void pwkutils$refreshPrefix(UUID id) {
