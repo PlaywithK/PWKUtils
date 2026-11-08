@@ -2,7 +2,9 @@
 
 **PWKUtils** is a serverside Fabric mod that adds various quality-of-life features for admins and players, allowing server owners to customize chat, tablist, prefixes, and more on Fabric servers.
 
-Get it on modrinth: https://modrinth.com/mod/pwkutils
+
+[![Modrinth](https://raw.githubusercontent.com/intergrav/devins-badges/v3/assets/cozy/available/modrinth_vector.svg)](https://modrinth.com/mod/pwkutils)
+[![CurseForge](https://raw.githubusercontent.com/intergrav/devins-badges/v3/assets/cozy/available/curseforge_vector.svg)](https://www.curseforge.com/minecraft/mc-mods/pwkutils/)
 
 ## Versions
 
@@ -11,9 +13,9 @@ Get it on modrinth: https://modrinth.com/mod/pwkutils
 | 26.3 | 📅| 📅 | 📅 | ❌ |
 | 26.2 | 📅 | 📅 | 📅 | ❌ |
 | 26.1 | 📅 | 📅 | 📅 | ❌ |
-| 1.21.11 | 📅 | 🚧 | 📅 | 📅 |
-| 1.21.1 | 🚧 | ✅ | 📅 | 📅 |
-| 1.21 | 🚧 | ✅ | 📅 | 📅 |
+| 1.21.11 | 📅 | ✅ | 📅 | 📅 |
+| 1.21.9 - 1.21.10 | 🚧 | ✅ | 📅 | 📅 |
+| 1.21 - 1.21.8 | 🚧 | ✅ | 📅 | 📅 |
 | 1.20.6 | 📅 | 📅 | 📅 | 📅 |
 | 1.20.1 | ✅ | 🚧 | 📅 | 📅 |
 | 1.20 | ✅ | 🚧 | 📅| 📅 |
@@ -21,7 +23,7 @@ Get it on modrinth: https://modrinth.com/mod/pwkutils
 | 1.18.x | 📅 | ❌ | 📅 | 📅 |
 | 1.12.2 | 📅 | ❌ | 📅 | 📅 |
 
-✅ Supported · 🚧 Work in Progress · 📅 Planned · ❌ Not supported/planned
+✅ Supported 🚧 Work in Progress 📅 Planned ❌ Not supported/planned
 
 ## Features
 
