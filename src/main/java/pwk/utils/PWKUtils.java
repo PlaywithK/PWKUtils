@@ -57,10 +57,10 @@ public class PWKUtils {
 
 		ServerPlayer player = event.getPlayer();
 //? if >=1.21.9 {
-		MinecraftServer server = player.level().getServer();
-		 //?} else {
-		/*MinecraftServer server = player.getServer();
-*///?}
+		/*MinecraftServer server = player.level().getServer();
+		 *///?} else {
+		MinecraftServer server = player.getServer();
+//?}
 		if (server == null) return;
 
 		String formattedMsg = ConfigManager.getChatFormat(

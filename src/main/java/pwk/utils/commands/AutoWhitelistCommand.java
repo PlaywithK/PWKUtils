@@ -31,10 +31,10 @@ public class AutoWhitelistCommand {
                                     for (ServerPlayer p : context.getSource().getServer()
                                             .getPlayerList().getPlayers()) {
                                         //? if >=1.21.9 {
-                                        builder.suggest(p.getGameProfile().name());
-                                         //?} else {
-                                        /*builder.suggest(p.getGameProfile().getName());
-*///?}
+                                        /*builder.suggest(p.getGameProfile().name());
+                                         *///?} else {
+                                        builder.suggest(p.getGameProfile().getName());
+//?}
                                     }
                                     return CompletableFuture.completedFuture(builder.build());
                                 })
@@ -94,10 +94,10 @@ public class AutoWhitelistCommand {
 
                             for (String playerName : cfg.players) {
 //? if >=1.21.9 {
-                                var profile = server.services().nameToIdCache().get(playerName);
-//?} else {
-                                /*var profile = server.getProfileCache().get(playerName);
-                                 *///?}
+                                /*var profile = server.services().nameToIdCache().get(playerName);
+*///?} else {
+                                var profile = server.getProfileCache().get(playerName);
+                                 //?}
 
                                 if (profile.isEmpty()) {
                                     send(ctx.getSource(), LocalizationManager.get("command.autowhitelist.run.notfound", playerName));

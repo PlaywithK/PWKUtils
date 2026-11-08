@@ -43,10 +43,10 @@ public class GamemodeCommand {
                                     for (ServerPlayer p : context.getSource().getServer()
                                             .getPlayerList().getPlayers()) {
                                         //? if >=1.21.9 {
-                                        builder.suggest(p.getGameProfile().name());
-                                         //?} else {
-                                        /*builder.suggest(p.getGameProfile().getName());
-                                        *///?}
+                                        /*builder.suggest(p.getGameProfile().name());
+                                         *///?} else {
+                                        builder.suggest(p.getGameProfile().getName());
+                                        //?}
                                     }
                                     return CompletableFuture.completedFuture(builder.build());
                                 })
