@@ -10,9 +10,9 @@
 
 | Minecraft | Fabric | NeoForge | Forge |
 |-----------|:-----:|:-----:|:-----:|
-| 26.3 | 📅| 📅 | 📅 |
-| 26.2 | 📅 | 📅 | 📅 |
-| 26.1 | 📅 | 📅 | 📅 |
+| 26.3 | 📅| ✅ | 📅 |
+| 26.2 | 📅 | ✅ | 📅 |
+| 26.1 - 26.1.2 | 📅 | ✅ | 📅 |
 | 1.21.11 | 📅 | ✅ | 📅 |
 | 1.21.9 - 1.21.10 | 🚧 | ✅ | 📅 |
 | 1.21 - 1.21.8 | 🚧 | ✅ | 📅 |
@@ -53,8 +53,8 @@
 
 ### 6. Commands
 - `/gm <0-3>` – Quickly change your game mode:
-  - `0` = Survival  
-  - `1` = Creative  
-  - `2` = Adventure  
-  - `3` = Spectator  
+  - `0` = Survival
+  - `1` = Creative
+  - `2` = Adventure
+  - `3` = Spectator
 - `/tps` – Displays the current server TPS
