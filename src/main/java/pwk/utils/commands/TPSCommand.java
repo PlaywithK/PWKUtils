@@ -4,10 +4,10 @@ import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.Component;
 //? if >=1.20.5 {
-/*import net.neoforged.neoforge.event.tick.ServerTickEvent;
-*///?} else {
-import net.neoforged.neoforge.event.TickEvent;
- //?}
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
+//?} else {
+/*import net.neoforged.neoforge.event.TickEvent;
+ *///?}
 
 import static net.minecraft.commands.Commands.literal;
 
@@ -16,11 +16,11 @@ public class TPSCommand {
     private static volatile double tps = 20.0;
 
     //? if >=1.20.5 {
-    /*public static void onServerTick(ServerTickEvent.Pre event) {
-*///?} else {
-    public static void onServerTick(TickEvent.ServerTickEvent event) {
+    public static void onServerTick(ServerTickEvent.Pre event) {
+//?} else {
+    /*public static void onServerTick(TickEvent.ServerTickEvent event) {
         if (event.phase != TickEvent.Phase.START) return;
-//?}
+*///?}
         long now = System.currentTimeMillis();
         long delta = now - lastTickTime;
         lastTickTime = now;
