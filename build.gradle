@@ -5,6 +5,7 @@ plugins {
 }
 
 def isUnobfuscated = stonecutter.eval(stonecutter.current.version, ">=26.1")
+def isLegacyModsToml = stonecutter.eval(stonecutter.current.version, "<1.20.5")
 
 version = mod_version
 group = mod_group_id
@@ -54,6 +55,9 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
 	expand replaceProperties
 	from rootProject.file("src/main/templates")
 	into "build/generated/sources/modMetadata"
+	if (isLegacyModsToml) {
+		rename 'neoforge\\.mods\\.toml', 'mods.toml'
+	}
 }
 sourceSets.main.resources.srcDir generateModMetadata
 neoForge.ideSyncTask generateModMetadata
