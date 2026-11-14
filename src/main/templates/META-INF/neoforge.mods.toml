@@ -16,14 +16,14 @@ config = "pwkutils.mixins.json"
 
 [[dependencies.pwkutils]]
 modId = "neoforge"
-type = "required"
+${dependency_requirement}
 versionRange = "${neo_version_range}"
 ordering = "NONE"
 side = "SERVER"
 
 [[dependencies.pwkutils]]
 modId = "minecraft"
-type = "required"
+${dependency_requirement}
 versionRange = "${minecraft_version_range}"
 ordering = "NONE"
 side = "SERVER"

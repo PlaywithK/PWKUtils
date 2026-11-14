@@ -11,7 +11,10 @@ version = mod_version
 group = mod_group_id
 base { archivesName = mod_id }
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(isUnobfuscated ? 25 : 21)
+def javaVersion = isUnobfuscated ? 25 : (isLegacyModsToml ? 17 : 21)
+java.toolchain.languageVersion = JavaLanguageVersion.of(javaVersion)
+
+def dependencyRequirement = isLegacyModsToml ? 'mandatory = true' : 'type = "required"'
 
 neoForge {
 	version = project.neo_version
@@ -49,7 +52,8 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
 			mod_license            : mod_license,
 			mod_version            : mod_version,
 			mod_authors            : mod_authors,
-			mod_description        : mod_description
+			mod_description        : mod_description,
+			dependency_requirement : dependencyRequirement
 	]
 	inputs.properties replaceProperties
 	expand replaceProperties
